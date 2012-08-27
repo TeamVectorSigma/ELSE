@@ -33,7 +33,6 @@ case "$1" in
       ( cd kernel/samsung/p1c ; make mrproper )
       ;;
   $DEVICE|"")
-      time {
         source build/envsetup.sh
 	if [ $ROM = "pa" ]; then
         [ ! -d vendor/cm/proprietary ] && ( cd vendor/cm ; ./get-prebuilts )
@@ -43,7 +42,6 @@ case "$1" in
 	if [ ! -z "$USER" ]; then
 	scp out/target/product/$ROM_$DEVICE-*.zip $USER@upload.goo.im:/home/$USER/public_html/Roms/$ROM/
 	fi
-      }
       ;;
   *)
       echo

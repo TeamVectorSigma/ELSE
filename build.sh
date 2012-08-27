@@ -26,9 +26,9 @@ echo
       echo "       ${0##*/} [ <device> ] [ <build-variant> ]"
       echo
       echo "  <action> : clean|help"
-      echo "  <device> : p1|p1c|p1l|p1n       		default=$DEVICE"
-      echo "  <variant>: user|userdebug|eng   		default=$VARIANT"
-      echo "  <rom>    : aokp|cna|pa"
+      echo "  <device> : e.g. crespo|p1|tuna"
+      echo "  <variant>: e.g. user|userdebug|eng   		default=$VARIANT"
+      echo "  <rom>    : e.g. aokp|cm|cna|pa"
       echo "  <user>   : only if your a goo.im dev! :P"
 exit 1
 fi
@@ -48,7 +48,7 @@ case "$1" in
         lunch "$ROM"_"$TARGET"
         make -j$THREADS bacon
 	if [ ! -z "$USER" ]; then
-	scp out/target/product/$ROM_$DEVICE-*.zip $USER@upload.goo.im:/home/$USER/public_html/Roms/$ROM/
+	scp out/target/product/$DEVICE/$ROM_$DEVICE-*.zip $USER@upload.goo.im:/home/$USER/public_html/Roms/$ROM/
 	fi
       ;;
   help)
@@ -62,6 +62,6 @@ case "$1" in
 		  # userdebug 	like user but with root access and debuggability; preferred for debugging and default in most rom's cases
 		  # eng		development configuration with additional debugging tools"	
       echo "  <rom>    : What Rom are you developing for? e.g. aokp||cm|cna|pa"
-      echo "  <user>   : only if your a goo.im dev! enter it here :P"
+      echo "  <user>   : only if your a goo.im dev! enter it here :P and this will upload it for you :)"
       ;;
 esac

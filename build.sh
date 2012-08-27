@@ -1,19 +1,13 @@
 #!/bin/bash
 
-DEVICE=p1
-for i in p1 p1c p1l p1n; do
-  [ "$1" == "$i" ] && DEVICE="$i"
-done
+DEVICE="$1"
 
 VARIANT=userdebug
 for i in user userdebug eng; do
   [ "$2" == "$i" ] && VARIANT="$i"
 done
 
-ROM=
-for i in aokp cna pa; do
-  [ "$3" == "$i" ] && ROM="$i"
-done
+ROM="$3"
 
 USER="$4"
 
@@ -26,6 +20,16 @@ THREADS=$(grep processor /proc/cpuinfo | wc -l)
 fi
 
 if [ -z "$ROM" ]; then
+echo
+      echo "usage:" 
+      echo "       ${0##*/} [ <action> ]"
+      echo "       ${0##*/} [ <device> ] [ <build-variant> ]"
+      echo
+      echo "  <action> : clean|help"
+      echo "  <device> : p1|p1c|p1l|p1n       		default=$DEVICE"
+      echo "  <variant>: user|userdebug|eng   		default=$VARIANT"
+      echo "  <rom>    : aokp|cna|pa"
+      echo "  <user>   : only if your a goo.im dev! :P"
 exit 1
 fi
 
@@ -47,16 +51,17 @@ case "$1" in
 	scp out/target/product/$ROM_$DEVICE-*.zip $USER@upload.goo.im:/home/$USER/public_html/Roms/$ROM/
 	fi
       ;;
-  *)
+  help)
       echo
-      echo "usage:" 
-      echo "       ${0##*/} [ <action> ]"
-      echo "       ${0##*/} [ <device> ] [ <build-variant> ]"
+      echo  
       echo
       echo "  <action> : clean|help"
-      echo "  <device> : p1|p1c|p1l|p1n       		default=$DEVICE"
-      echo "  <variant>: user|userdebug|eng   		default=$VARIANT"
-      echo "  <rom>    : aokp|cna|pa"
-      echo "  <user>   : only if your a goo.im dev! :P"
+      echo "  <device> : Device's codename e.g. crespo|p1|tuna"
+      echo "  <variant>: What build you prefer user|userdebug|eng   	default=$VARIANT"
+      echo "      # user 	limited access; suited for production
+		  # userdebug 	like user but with root access and debuggability; preferred for debugging and default in most rom's cases
+		  # eng		development configuration with additional debugging tools"	
+      echo "  <rom>    : What Rom are you developing for? e.g. aokp||cm|cna|pa"
+      echo "  <user>   : only if your a goo.im dev! enter it here :P"
       ;;
 esac

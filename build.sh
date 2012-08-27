@@ -16,20 +16,6 @@ else
 THREADS=$(grep processor /proc/cpuinfo | wc -l)
 fi
 
-if [ -z "$ROM" ]; then
-echo
-      echo "usage:" 
-      echo "       ${0##*/} [ <action> ]"
-      echo "       ${0##*/} [ <device> ] [ <build-variant> ]"
-      echo
-      echo "  <action> : clean|help"
-      echo "  <device> : e.g. crespo|p1|tuna"
-      echo "  <variant>: e.g. user|userdebug|eng"
-      echo "  <rom>    : e.g. aokp|cm|cna|pa"
-      echo "  <user>   : only if your a goo.im dev! :P"
-exit 1
-fi
-
 case "$1" in
 
   clean)
@@ -37,7 +23,7 @@ case "$1" in
       ( cd kernel/samsung/p1  ; make mrproper )
       ( cd kernel/samsung/p1c ; make mrproper )
       ;;
-  $DEVICE|"")
+   rom)
         source build/envsetup.sh
 	if [ $ROM = "pa" ]; then
         [ ! -d vendor/cm/proprietary ] && ( cd vendor/cm ; ./get-prebuilts )
@@ -60,5 +46,17 @@ case "$1" in
       echo "	   eng		development configuration with additional debugging tools"
       echo "  <rom>    : What Rom are you developing for? e.g. aokp||cm|cna|pa"
       echo "  <user>   : only if your a goo.im dev! enter it here :P and this will upload it for you :)"
+      ;;
+     *)
+      echo
+      echo "usage:" 
+      echo "       ${0##*/} [ <action> ]"
+      echo "       ${0##*/} [ <device> ] [ <build-variant> ]"
+      echo
+      echo "  <action> : clean|help"
+      echo "  <device> : e.g. crespo|p1|tuna"
+      echo "  <variant>: e.g. user|userdebug|eng"
+      echo "  <rom>    : e.g. aokp|cm|cna|pa"
+      echo "  <user>   : only if your a goo.im dev! :P"
       ;;
 esac

@@ -10,6 +10,8 @@ USER="$5"
 
 TARGET="$DEVICE-$VARIANT"
 
+PATH=public_html/ROMs/$ROM/
+
 if [ `uname` == "Darwin" ]; then
 THREADS=4
 else
@@ -31,7 +33,11 @@ case "$1" in
         lunch "$ROM"_"$TARGET"
         make -j$THREADS bacon
 	if [ ! -z "$USER" ]; then
-	scp out/target/product/$DEVICE/$ROM_$DEVICE-*.zip $USER@upload.goo.im:/home/$USER/public_html/Roms/$ROM/
+	read -p "do you want the file to go somewhere else besides public_html/Roms/$ROM/ ? (y/n)" ANSWER
+	if [ "$ANSWER" = "y" ]; then
+	read PATH
+	fi
+	scp out/target/product/$DEVICE/$ROM_$DEVICE-*.zip $USER@upload.goo.im:/home/$USER/$PATH
 	fi
       ;;
   help)

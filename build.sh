@@ -10,19 +10,23 @@ for i in user userdebug eng; do
   [ "$2" == "$i" ] && VARIANT="$i"
 done
 
-ROM=""
+ROM=
 for i in aokp cna pa; do
   [ "$3" == "$i" ] && ROM="$i"
 done
 
 USER="$4"
 
-TARGET="$ROM_$DEVICE-$VARIANT"
+TARGET="$DEVICE-$VARIANT"
 
 if [ `uname` == "Darwin" ]; then
 THREADS=4
 else
 THREADS=$(grep processor /proc/cpuinfo | wc -l)
+fi
+
+if [ -z "$ROM" ]; then
+exit 1
 fi
 
 case "$1" in
@@ -37,7 +41,7 @@ case "$1" in
 	if [ $ROM = "pa" ]; then
         [ ! -d vendor/cm/proprietary ] && ( cd vendor/cm ; ./get-prebuilts )
 	fi
-        lunch "$TARGET"
+        lunch "$ROM"_"$TARGET"
         make -j$THREADS bacon
 	if [ ! -z "$USER" ]; then
 	scp out/target/product/$ROM_$DEVICE-*.zip $USER@upload.goo.im:/home/$USER/public_html/Roms/$ROM/

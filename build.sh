@@ -41,7 +41,7 @@ case "$1" in
       echo "  <action> : clean|help"
       echo "  <device> : Device's codename e.g. crespo|p1|tuna"
       echo "  <variant>: What build you prefer user|userdebug|eng"
-      echo "       user 	limited access; suited for production"
+      echo "	   user 	limited access; suited for production"
       echo "	   userdebug 	like user but with root access and debuggability; preferred for debugging and default in most rom's cases"
       echo "	   eng		development configuration with additional debugging tools"
       echo "  <rom>    : What Rom are you developing for? e.g. aokp||cm|cna|pa"

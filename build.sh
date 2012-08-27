@@ -38,7 +38,7 @@ case "$1" in
       echo
       echo  
       echo
-      echo "  <action> : clean|help"
+      echo "  <action> : clean|help|rom"
       echo "  <device> : Device's codename e.g. crespo|p1|tuna"
       echo "  <variant>: What build you prefer user|userdebug|eng"
       echo "	   user 	limited access; suited for production"
@@ -53,7 +53,7 @@ case "$1" in
       echo "       ${0##*/} [ <action> ]"
       echo "       ${0##*/} [ <device> ] [ <build-variant> ]"
       echo
-      echo "  <action> : clean|help"
+      echo "  <action> : clean|help|rom"
       echo "  <device> : e.g. crespo|p1|tuna"
       echo "  <variant>: e.g. user|userdebug|eng"
       echo "  <rom>    : e.g. aokp|cm|cna|pa"

@@ -1,12 +1,12 @@
 #!/bin/bash
 
-DEVICE="$1"
+DEVICE="$2"
 
-VARIANT="$2"
+VARIANT="$3"
 
-ROM="$3"
+ROM="$4"
 
-USER="$4"
+USER="$5"
 
 TARGET="$DEVICE-$VARIANT"
 

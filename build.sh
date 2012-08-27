@@ -25,7 +25,7 @@ case "$1" in
       ;;
    rom)
         source build/envsetup.sh
-	if [ $ROM = "pa" ]; then
+	if [ -d vendor/cm/ ]; then
         [ ! -d vendor/cm/proprietary ] && ( cd vendor/cm ; ./get-prebuilts )
 	fi
         lunch "$ROM"_"$TARGET"

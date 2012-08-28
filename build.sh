@@ -10,7 +10,7 @@ USER="$5"
 
 TARGET="$DEVICE-$VARIANT"
 
-PATH=ROMs/$ROM/
+DIR=ROMs/$ROM/
 
 if [ `uname` == "Darwin" ]; then
 THREADS=4
@@ -35,14 +35,14 @@ case "$1" in
 	if [ ! -z "$USER" ]; then
 	read -p "do you want the file to go somewhere else besides /Roms/$ROM/ in the public_html folder? (y/n)" ANSWER
 	if [ "$ANSWER" = "y" ]; then
-	read PATH
+	read DIR
 	fi
 	ssh $USER@upload.goo.im "
-	if [ ! -d public_html/$PATH ]; then
+	if [ ! -d public_html/$DIR ]; then
 	cd public_html/
-	mkdir $PATH
+	mkdir $DIR
 	fi"
-	scp out/target/product/$DEVICE/$ROM_$DEVICE-*.zip $USER@upload.goo.im:/home/$USER/public_html/$PATH
+	scp out/target/product/$DEVICE/$ROM_$DEVICE-*.zip $USER@upload.goo.im:/home/$USER/public_html/$DIR
 	fi
       ;;
  kernel)

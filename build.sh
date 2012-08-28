@@ -10,12 +10,23 @@ USER="$5"
 
 TARGET="$DEVICE-$VARIANT"
 
-DIR=ROMs/$ROM/
+if [ -z "$SUBDIR" ] && [ -z "$ROMDIR" ]; then
+	DIR=ROMs/$ROM/
+fi
+if [ ! -z "$SUBDIR" ] && [ ! -z "$ROMDIR" ]; then
+	DIR=$SUBDIR/$ROMDIR/
+fi
+if [ -z "$SUBDIR" ] && [ ! -z "$ROMDIR" ]; then
+	DIR=ROMs/$ROMDIR/
+fi
+if [ ! -z "$SUBDIR" ] && [ -z "$ROMDIR" ]; then
+	DIR=$SUBDIR/$ROM/
+fi
 
 if [ `uname` == "Darwin" ]; then
-THREADS=4
-else
-THREADS=$(grep processor /proc/cpuinfo | wc -l)
+	THREADS=4
+	else
+	THREADS=$(grep processor /proc/cpuinfo | wc -l)
 fi
 
 case "$1" in
@@ -28,21 +39,50 @@ case "$1" in
    rom)
         source build/envsetup.sh
 	if [ -d vendor/cm/ ]; then
-        [ ! -d vendor/cm/proprietary ] && ( cd vendor/cm ; ./get-prebuilts )
+        	[ ! -d vendor/cm/proprietary ] && ( cd vendor/cm ; ./get-prebuilts )
 	fi
         lunch "$ROM"_"$TARGET"
         make -j$THREADS bacon
 	if [ ! -z "$USER" ]; then
-	read -p "do you want the file to go somewhere else besides /Roms/$ROM/ in the public_html folder? (y/n)" ANSWER
-	if [ "$ANSWER" = "y" ]; then
-	read DIR
-	fi
-	ssh $USER@upload.goo.im "
-	if [ ! -d public_html/$DIR ]; then
-	cd public_html/
-	mkdir $DIR
-	fi"
-	scp out/target/product/$DEVICE/$ROM_$DEVICE-*.zip $USER@upload.goo.im:/home/$USER/public_html/$DIR
+		read -p "Is the directory public_html/$DIR ok for the ROM's destination? (y/n)" ANSWER
+		if [ "$ANSWER" = "n" ]; then
+			read -p "Do you want modify public_html/-->(ROMs)<--? (y/n)" ANSWER
+			if [ "$ANSWER" = "y" ]; then
+				read -p "Enter your prefered folder name within public_html/ folders: " SUBDIR
+			fi
+			read -p "Do you want the ROM to go somewhere else besides $ROM/ in the public_html/Roms/ folder? (y/n)" ANSWER
+			if [ "$ANSWER" = "y" ]; then
+				read -p "Enter your prefered folder name within public_html/Roms/ folders: " ROMDIR
+			fi
+		fi
+		ssh $USER@upload.goo.im "
+		if [ -z "$SUBDIR" ]; then
+			if [ ! -d public_html/ROMs ]; then
+				cd public_html/
+				mkdir ROMs
+				if [ -z "$ROMDIR" ]; then
+				cd ROMs/
+				mkdir $ROM
+				else
+				cd ROMs/
+				mkdir $ROMDIR
+				fi
+			fi
+			else
+			if [ ! -d public_html/$SUBDIR ]; then
+				cd public_html/
+				mkdir $SUBDIR
+				if [ -z "$ROMDIR" ]; then
+				cd $SUBDIR/
+				mkdir $ROM
+				else
+				cd $SUBDIR/
+				mkdir $ROMDIR
+				fi
+			fi
+		fi
+		exit"
+		scp out/target/product/$DEVICE/$ROM_$DEVICE-*.zip $USER@upload.goo.im:/home/$USER/public_html/$DIR
 	fi
       ;;
  kernel)

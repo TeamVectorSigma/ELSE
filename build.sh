@@ -40,11 +40,16 @@ case "$1" in
 	scp out/target/product/$DEVICE/$ROM_$DEVICE-*.zip $USER@upload.goo.im:/home/$USER/$PATH
 	fi
       ;;
+ kernel)
+	source build/envsetup.sh
+	lunch "$ROM"_"$TARGET"
+	make -j$THREADS out/target/product/$DEVICE/boot.img
+      ;;
   help)
       echo
       echo  
       echo
-      echo "  <action> : clean|help|rom"
+      echo "  <action> : clean|help|kernel|rom"
       echo "  <device> : Device's codename e.g. crespo|p1|tuna"
       echo "  <variant>: What build you prefer user|userdebug|eng"
       echo "	   user 	limited access; suited for production"
@@ -59,7 +64,7 @@ case "$1" in
       echo "       ${0##*/} [ <action> ]"
       echo "       ${0##*/} [ <device> ] [ <build-variant> ]"
       echo
-      echo "  <action> : clean|help|rom"
+      echo "  <action> : clean|help|kernel|rom"
       echo "  <device> : e.g. crespo|p1|tuna"
       echo "  <variant>: e.g. user|userdebug|eng"
       echo "  <rom>    : e.g. aokp|cm|cna|pa"

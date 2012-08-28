@@ -22,8 +22,8 @@ case "$1" in
 
   clean)
       make clean
-      ( cd kernel/samsung/p1  ; make mrproper )
-      ( cd kernel/samsung/p1c ; make mrproper )
+      ( cd kernel/samsung/$DEVICE  ; make mrproper )
+      ( cd kernel/samsung/$DEVICE ; make mrproper )
       ;;
    rom)
         source build/envsetup.sh

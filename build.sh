@@ -93,7 +93,7 @@ case "$1" in
       ;;
   help)
       echo
-      echo  
+      echo "       ${0##*/} <action> <device> <varient> <rom> <user>"
       echo
       echo "  <action> : clean|help|kernel|rom"
       echo "  <device> : Device's codename e.g. crespo|p1|tuna"
@@ -107,8 +107,7 @@ case "$1" in
      *)
       echo
       echo "usage:" 
-      echo "       ${0##*/} [ <action> ]"
-      echo "       ${0##*/} [ <device> ] [ <build-variant> ]"
+      echo "       ${0##*/} <action> <device> <varient> <rom> <user>"
       echo
       echo "  <action> : clean|help|kernel|rom"
       echo "  <device> : e.g. crespo|p1|tuna"

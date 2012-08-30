@@ -1,10 +1,10 @@
 #!/bin/bash
 
-DEVICE="$2"
+ROM="$2"
 
-VARIANT="$3"
+DEVICE="$3"
 
-ROM="$4"
+VARIANT="$4"
 
 USER="$5"
 
@@ -93,26 +93,26 @@ case "$1" in
       ;;
   help)
       echo
-      echo "       ${0##*/} <action> <device> <varient> <rom> <user>"
+      echo "       ${0##*/} <action> <rom> <device> <varient> <user>"
       echo
       echo "  <action> : clean|help|kernel|rom"
+      echo "  <rom>    : What Rom are you developing for? e.g. aokp|cm|cna|pa"
       echo "  <device> : Device's codename e.g. crespo|p1|tuna"
       echo "  <variant>: What build you prefer user|userdebug|eng"
       echo "	   user 	limited access; suited for production"
       echo "	   userdebug 	like user but with root access and debuggability; preferred for debugging and default in most rom's cases"
       echo "	   eng		development configuration with additional debugging tools"
-      echo "  <rom>    : What Rom are you developing for? e.g. aokp||cm|cna|pa"
       echo "  <user>   : only if your a goo.im dev! enter it here :P and this will upload it for you :)"
       ;;
      *)
       echo
       echo "usage:" 
-      echo "       ${0##*/} <action> <device> <varient> <rom> <user>"
+      echo "       ${0##*/} <action> <rom> <device> <varient> <user>"
       echo
       echo "  <action> : clean|help|kernel|rom"
+      echo "  <rom>    : e.g. aokp|cm|cna|pa"
       echo "  <device> : e.g. crespo|p1|tuna"
       echo "  <variant>: e.g. user|userdebug|eng"
-      echo "  <rom>    : e.g. aokp|cm|cna|pa"
       echo "  <user>   : only if your a goo.im dev! :P"
       ;;
 esac

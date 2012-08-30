@@ -32,9 +32,10 @@ fi
 case "$1" in
 
   clean)
+      read -p "who is your manufacturer and what is your device? e.g. samsung/p1 & asus/grouper: " KERNELDIR
       make clean
-      ( cd kernel/samsung/$DEVICE  ; make mrproper )
-      ( cd kernel/samsung/$DEVICE ; make mrproper )
+      ( cd kernel/$KERNELDIR  ; make mrproper )
+      ( cd kernel/$KERNELDIR ; make mrproper )
       ;;
    rom)
         source build/envsetup.sh
